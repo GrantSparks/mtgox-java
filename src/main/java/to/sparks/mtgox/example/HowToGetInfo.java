@@ -60,6 +60,8 @@ public class HowToGetInfo {
         } else {
             logger.info("There are no currently open bid or ask orders.");
         }
+        context = null;
+        System.exit(0);
 
     }
 }
