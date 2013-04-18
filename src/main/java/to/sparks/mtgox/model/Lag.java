@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  *
  * @author SparksG
+ * @author keilw
  */
 @JsonAutoDetect
 public class Lag extends DtoBase {
@@ -33,4 +34,8 @@ public class Lag extends DtoBase {
     public String getLagText() {
         return lagText;
     }
+
+	public long getLength() {
+		return length;
+	}
 }
