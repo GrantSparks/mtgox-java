@@ -29,6 +29,7 @@ import to.sparks.mtgox.model.Ticker;
  * This example will show how to get some types of information from MtGox
  *
  * @author SparksG
+ * @author Werner Keil
  */
 public class HowToGetInfo {
 
