@@ -35,23 +35,28 @@ public class HowToGetInfo {
     static final Logger logger = Logger.getLogger(HowToGetInfo.class.getName());
 
     public static void main(String[] args) throws Exception {
-
-        // Obtain a $USD instance of the API
         ApplicationContext context = new ClassPathXmlApplicationContext("to/sparks/mtgox/example/Beans.xml");
-        MtGoxHTTPClient mtgoxUSD = (MtGoxHTTPClient) context.getBean("mtgoxUSD");
-
-        Lag lag = mtgoxUSD.getLag();
+        MtGoxHTTPClient mtgoxClient = null;
+    	final String currCode = System.getProperty("curr");
+        if (currCode!= null && currCode.length()>0) {
+	            // Obtain a CHF instance of the API
+	    		mtgoxClient = (MtGoxHTTPClient) context.getBean("mtgoxAPI");
+        } else {
+	    	throw new IllegalArgumentException("No currency given or currency " + currCode + " not supported.");
+        }
+        Lag lag = mtgoxClient.getLag();
         logger.log(Level.INFO, "Current lag: {0}", lag.getLag());
 
 
-        Ticker ticker = mtgoxUSD.getTicker();
+        Ticker ticker = mtgoxClient.getTicker();
+        logger.log(Level.INFO, "Currency: {0}", ticker.getCurrencyCode());
         logger.log(Level.INFO, "Last price: {0}", ticker.getLast().toPlainString());
 
         // Get the private account info
-        AccountInfo info = mtgoxUSD.getAccountInfo();
+        AccountInfo info = mtgoxClient.getAccountInfo();
         logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
 
-        Order[] openOrders = mtgoxUSD.getOpenOrders();
+        Order[] openOrders = mtgoxClient.getOpenOrders();
 
         if (ArrayUtils.isNotEmpty(openOrders)) {
             for (Order order : openOrders) {
@@ -62,6 +67,5 @@ public class HowToGetInfo {
         }
         context = null;
         System.exit(0);
-
     }
 }
