@@ -35,7 +35,8 @@ public class HowToGetInfo {
     static final Logger logger = Logger.getLogger(HowToGetInfo.class.getName());
 
     public static void main(String[] args) throws Exception {
-        ApplicationContext context = new ClassPathXmlApplicationContext("to/sparks/mtgox/example/Beans.xml");
+        @SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext("to/sparks/mtgox/example/Beans.xml");
         MtGoxHTTPClient mtgoxClient = null;
     	final String currCode = System.getProperty("curr");
         if (currCode!= null && currCode.length()>0) {
