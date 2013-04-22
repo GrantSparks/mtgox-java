@@ -61,12 +61,6 @@ public class MtGoxBitcoin extends MtGoxUnitOfCredit {
 	}
 
 	@Override
-	public byte byteValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public MonetaryAmount divide(MonetaryAmount arg0) {
 		// TODO Auto-generated method stub
 		return null;
@@ -103,12 +97,6 @@ public class MtGoxBitcoin extends MtGoxUnitOfCredit {
 	}
 
 	@Override
-	public float floatValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public MonetaryAmount from(Number arg0) {
 		// TODO Auto-generated method stub
 		return null;
@@ -134,18 +122,6 @@ public class MtGoxBitcoin extends MtGoxUnitOfCredit {
 
 	@Override
 	public int getScale() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int intValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int intValueExact() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

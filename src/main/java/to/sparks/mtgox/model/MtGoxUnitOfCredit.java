@@ -53,7 +53,7 @@ public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal>, Monet
         return currencyInfo;
     }
 
-    public void setCurrencyInfo(CurrencyInfo currencyInfo) {
+    public void setCurrency(CurrencyInfo currencyInfo) {
         this.currencyInfo = currencyInfo;
     }
 
@@ -68,7 +68,25 @@ public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal>, Monet
     public long longValue() {
         return numUnits.longValue();
     }
+    
+    public float floatValue() {
+    	return numUnits.floatValue();
+    }
+    
+    public byte byteValue() {
+    	return numUnits.byteValue();
+    }
 
+	@Override
+	public int intValue() {
+		return numUnits.intValue();
+	}
+
+	@Override
+	public int intValueExact() {
+		return numUnits.intValueExact();
+	}
+    
     public BigDecimal add(BigDecimal target) {
         return numUnits.add(target);
     }
