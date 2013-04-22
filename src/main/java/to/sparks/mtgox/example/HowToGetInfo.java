@@ -51,9 +51,12 @@ public class HowToGetInfo {
 
 
         Ticker ticker = mtgoxClient.getTicker();
-        logger.log(Level.INFO, "Currency: {0}", ticker.getCurrencyCode());
-        logger.log(Level.INFO, "Last price: {0}", ticker.getLast().toPlainString());
-
+        if (ticker != null) {
+	        logger.log(Level.INFO, "Currency: {0}", ticker.getCurrencyCode());
+	        logger.log(Level.INFO, "Last price: {0}", ticker.getLast().toPlainString());
+        } else {
+        	logger.log(Level.WARNING, "No ticker returned.");
+        }
         // Get the private account info
         AccountInfo info = mtgoxClient.getAccountInfo();
         logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
