@@ -59,10 +59,13 @@ public class HowToGetInfo {
         }
         // Get the private account info
         AccountInfo info = mtgoxClient.getAccountInfo();
-        logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
-
+        if (info != null) {
+        	logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
+        } else {
+        	logger.log(Level.WARNING, "No account returned.");
+        }
+        
         Order[] openOrders = mtgoxClient.getOpenOrders();
-
         if (ArrayUtils.isNotEmpty(openOrders)) {
             for (Order order : openOrders) {
                 logger.log(Level.INFO, "Open order: {0} status: {1} price: {2}{3} amount: {4}", new Object[]{order.getOid(), order.getStatus(), order.getCurrency().getCurrencyCode(), order.getPrice().getDisplay(), order.getAmount().getDisplay()});
