@@ -14,8 +14,6 @@
  */
 package to.sparks.mtgox;
 
-import java.util.Currency;
-
 import javax.money.CurrencyUnit;
 
 import to.sparks.mtgox.model.*;
