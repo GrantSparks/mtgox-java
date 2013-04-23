@@ -21,6 +21,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import javax.money.CurrencyUnit;
+
 import to.sparks.mtgox.model.*;
 import to.sparks.mtgox.net.HTTPAuthenticator;
 import to.sparks.mtgox.net.JSONSource;
@@ -57,12 +60,12 @@ class HTTPClientV1Service extends HTTPAuthenticator {
         tradeJSON = new JSONSource<>();
     }
 
-    public FullDepth getFullDepth(Currency currency) throws Exception {
+    public FullDepth getFullDepth(CurrencyUnit currency) throws Exception {
         FullDepth fullDepth = fullDepthJSON.getResultFromStream(new URL(UrlFactory.getUrlForCommand(currency, UrlFactory.Command.FullDepth)).openStream(), FullDepth.class).getReturn();
         return fullDepth;
     }
 
-    public String placeOrder(Currency currency, HashMap<String, String> params) throws Exception {
+    public String placeOrder(CurrencyUnit currency, HashMap<String, String> params) throws Exception {
         Result<String> result = stringJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(currency, UrlFactory.Command.PrivateOrderAdd), params), String.class);
         if (result.getError() != null) {
             throw new RuntimeException(result.getToken() + ": " + result.getError());
@@ -90,12 +93,12 @@ class HTTPClientV1Service extends HTTPAuthenticator {
         return privateInfo.getReturn();
     }
 
-    public Ticker getTicker(Currency currency) throws IOException, Exception {
+    public Ticker getTicker(CurrencyUnit currency) throws IOException, Exception {
         Result<Ticker> tickerUSD = tickerJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(currency, UrlFactory.Command.Ticker)), Ticker.class);
         return tickerUSD.getReturn();
     }
 
-    public CurrencyInfo getCurrencyInfo(Currency currency) throws IOException, Exception {
+    public CurrencyInfo getCurrencyInfo(CurrencyUnit currency) throws IOException, Exception {
         return getCurrencyInfo(currency.getCurrencyCode());
     }
 
@@ -125,7 +128,7 @@ class HTTPClientV1Service extends HTTPAuthenticator {
         return response.getReturn();
     }
     
-    public Trade[] getTradesSince(Currency currency, HashMap<String, String> params) throws IOException, Exception {
+    public Trade[] getTradesSince(CurrencyUnit currency, HashMap<String, String> params) throws IOException, Exception {
     	Result<Trade[]> trades = tradeJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(currency, UrlFactory.Command.Trades), params), Trade[].class);
     	if (trades.getError() != null){
     		throw new RuntimeException(trades.getToken() + ": "+ trades.getError());

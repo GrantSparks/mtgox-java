@@ -1,10 +1,14 @@
 package to.sparks.mtgox.model;
 
 import java.io.IOException;
-import java.util.Currency;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.money.CurrencyUnit;
+import javax.money.Localizable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import to.sparks.mtgox.net.JSONSource;
 
@@ -12,8 +16,9 @@ import to.sparks.mtgox.net.JSONSource;
  * Contains information about an MtGox currency
  *
  * @author SparksG
+ * @author Werner
  */
-public class CurrencyInfo extends DtoBase {
+public class CurrencyInfo extends DtoBase implements CurrencyUnit, Localizable {
 
     private String currency_code;
     private String name;
@@ -62,11 +67,11 @@ public class CurrencyInfo extends DtoBase {
         this.depth_channel = depth_channel;
     }
 
-    public Currency getCurrency() {
-        if (isVirtual()) {
-            throw new UnsupportedOperationException("Virtual MtGox currencies cannot be expressed as a Java currency.");
-        }
-        return Currency.getInstance(currency_code);
+    public CurrencyUnit getCurrency() {
+//        if (isVirtual()) {
+//            throw new UnsupportedOperationException("Virtual MtGox currencies cannot be expressed as a Java currency.");
+//        }
+        return this;
     }
 
     public String getName() {
@@ -122,4 +127,47 @@ public class CurrencyInfo extends DtoBase {
         hash = 79 * hash + Objects.hashCode(this.symbol);
         return hash;
     }
+
+	@Override
+	public String getCurrencyCode() {
+		return currency_code;
+	}
+
+	@Override
+	public int getDefaultFractionDigits() {
+		return getDecimals();
+	}
+
+	@Override
+	public String getNamespace() {
+		return "Mt.Gox";
+	}
+
+	@Override
+	public int getNumericCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Long getValidFrom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long getValidUntil() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isLegalTender() {
+		return false;
+	}
+
+	@Override
+	public String getDisplayName(Locale arg0) {
+		return name;
+	}
 }

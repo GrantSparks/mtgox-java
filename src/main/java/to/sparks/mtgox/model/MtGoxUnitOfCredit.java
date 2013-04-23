@@ -6,13 +6,16 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+import javax.money.MonetaryAmount;
+
 /**
  * A class to encapsulate all the weird mtgox money conversions. See...
  * https://en.bitcoin.it/wiki/MtGox/API
  *
  * @author SparksG
+ * @author Werner
  */
-public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal> {
+public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal>, MonetaryAmount {
 
     private CurrencyInfo currencyInfo;
     private BigDecimal numUnits;
@@ -46,11 +49,11 @@ public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal> {
         }
     }
 
-    public CurrencyInfo getCurrencyInfo() {
+    public CurrencyInfo getCurrency() {
         return currencyInfo;
     }
 
-    public void setCurrencyInfo(CurrencyInfo currencyInfo) {
+    public void setCurrency(CurrencyInfo currencyInfo) {
         this.currencyInfo = currencyInfo;
     }
 
@@ -65,7 +68,25 @@ public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal> {
     public long longValue() {
         return numUnits.longValue();
     }
+    
+    public float floatValue() {
+    	return numUnits.floatValue();
+    }
+    
+    public byte byteValue() {
+    	return numUnits.byteValue();
+    }
 
+	@Override
+	public int intValue() {
+		return numUnits.intValue();
+	}
+
+	@Override
+	public int intValueExact() {
+		return numUnits.intValueExact();
+	}
+    
     public BigDecimal add(BigDecimal target) {
         return numUnits.add(target);
     }
@@ -139,7 +160,7 @@ public abstract class MtGoxUnitOfCredit implements Comparable<BigDecimal> {
     }
 
     private boolean isCurrenciesEquivalent(MtGoxUnitOfCredit o) {
-        return (currencyInfo == null && o.getCurrencyInfo() == null) || (currencyInfo != null && currencyInfo.equals(o.getCurrencyInfo()));
+        return (currencyInfo == null && o.getCurrency() == null) || (currencyInfo != null && currencyInfo.equals(o.getCurrency()));
     }
 
     @Override

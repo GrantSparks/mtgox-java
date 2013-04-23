@@ -29,30 +29,43 @@ import to.sparks.mtgox.model.Ticker;
  * This example will show how to get some types of information from MtGox
  *
  * @author SparksG
+ * @author Werner Keil
  */
 public class HowToGetInfo {
 
     static final Logger logger = Logger.getLogger(HowToGetInfo.class.getName());
 
     public static void main(String[] args) throws Exception {
-
-        // Obtain a $USD instance of the API
-        ApplicationContext context = new ClassPathXmlApplicationContext("to/sparks/mtgox/example/Beans.xml");
-        MtGoxHTTPClient mtgoxUSD = (MtGoxHTTPClient) context.getBean("mtgoxUSD");
-
-        Lag lag = mtgoxUSD.getLag();
+        @SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext("to/sparks/mtgox/example/Beans.xml");
+        MtGoxHTTPClient mtgoxClient = null;
+    	final String currCode = System.getProperty("curr");
+        if (currCode!= null && currCode.length()>0) {
+	            // Obtain a CHF instance of the API
+	    		mtgoxClient = (MtGoxHTTPClient) context.getBean("mtgoxAPI");
+        } else {
+	    	throw new IllegalArgumentException("No currency given or currency " + currCode + " not supported.");
+        }
+        Lag lag = mtgoxClient.getLag();
         logger.log(Level.INFO, "Current lag: {0}", lag.getLag());
 
 
-        Ticker ticker = mtgoxUSD.getTicker();
-        logger.log(Level.INFO, "Last price: {0}", ticker.getLast().toPlainString());
-
+        Ticker ticker = mtgoxClient.getTicker();
+        if (ticker != null) {
+	        logger.log(Level.INFO, "Currency: {0}", ticker.getCurrencyCode());
+	        logger.log(Level.INFO, "Last price: {0}", ticker.getLast().toPlainString());
+        } else {
+        	logger.log(Level.WARNING, "No ticker returned.");
+        }
         // Get the private account info
-        AccountInfo info = mtgoxUSD.getAccountInfo();
-        logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
-
-        Order[] openOrders = mtgoxUSD.getOpenOrders();
-
+        AccountInfo info = mtgoxClient.getAccountInfo();
+        if (info != null) {
+        	logger.log(Level.INFO, "Logged into account: {0}", info.getLogin());
+        } else {
+        	logger.log(Level.WARNING, "No account returned.");
+        }
+        
+        Order[] openOrders = mtgoxClient.getOpenOrders();
         if (ArrayUtils.isNotEmpty(openOrders)) {
             for (Order order : openOrders) {
                 logger.log(Level.INFO, "Open order: {0} status: {1} price: {2}{3} amount: {4}", new Object[]{order.getOid(), order.getStatus(), order.getCurrency().getCurrencyCode(), order.getPrice().getDisplay(), order.getAmount().getDisplay()});
@@ -60,6 +73,7 @@ public class HowToGetInfo {
         } else {
             logger.info("There are no currently open bid or ask orders.");
         }
-
+        context = null;
+        System.exit(0);
     }
 }

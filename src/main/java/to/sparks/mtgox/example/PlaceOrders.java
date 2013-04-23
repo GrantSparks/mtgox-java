@@ -16,6 +16,10 @@ package to.sparks.mtgox.example;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.money.CurrencyUnit;
+import javax.money.MoneyCurrency;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import to.sparks.mtgox.MtGoxHTTPClient;

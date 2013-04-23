@@ -20,6 +20,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import javax.money.CurrencyUnit;
+import javax.money.MoneyCurrency;
+
 import to.sparks.mtgox.MtGoxHTTPClient;
 import to.sparks.mtgox.model.*;
 
@@ -40,7 +44,7 @@ class APIService implements MtGoxHTTPClient {
         this.logger = logger;
         this.httpAPIV0 = httpAPIV0;
         this.httpAPIV1 = httpAPIV1;
-        this.currencyInfo = httpAPIV1.getCurrencyInfo(currency);
+        this.currencyInfo = httpAPIV1.getCurrencyInfo(MoneyCurrency.of(currency));
     }
 
     @Override
@@ -100,13 +104,13 @@ class APIService implements MtGoxHTTPClient {
 
     @Override
     public Ticker getTicker() throws IOException, Exception {
-        Ticker ticker = httpAPIV1.getTicker(currencyInfo.getCurrency());
+        Ticker ticker = httpAPIV1.getTicker(currencyInfo);
         currencyKludge(ticker);
         return ticker;
     }
 
     @Override
-    public Currency getBaseCurrency() {
+    public CurrencyUnit getBaseCurrency() {
         return currencyInfo.getCurrency();
     }
 
@@ -122,7 +126,7 @@ class APIService implements MtGoxHTTPClient {
     }
 
     @Override
-    public CurrencyInfo getCurrencyInfo(Currency currency) throws IOException, Exception {
+    public CurrencyInfo getCurrencyInfo(CurrencyUnit currency) throws IOException, Exception {
         return httpAPIV1.getCurrencyInfo(currency);
     }
 

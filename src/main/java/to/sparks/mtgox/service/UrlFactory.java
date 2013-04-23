@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.money.CurrencyUnit;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -89,7 +92,7 @@ class UrlFactory {
         return getUrlForCommand("", restCommand);
     }
 
-    public static String getUrlForCommand(Currency currency, Command restCommand) throws Exception {
+    public static String getUrlForCommand(CurrencyUnit currency, Command restCommand) throws Exception {
         return getUrlForCommand(currency.getCurrencyCode(), restCommand);
     }
 

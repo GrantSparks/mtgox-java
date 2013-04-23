@@ -14,7 +14,8 @@
  */
 package to.sparks.mtgox;
 
-import java.util.Currency;
+import javax.money.CurrencyUnit;
+
 import to.sparks.mtgox.model.*;
 
 /**
@@ -34,7 +35,7 @@ public interface MtGoxHTTPClient {
      *
      * @return The java currency used by this api connection.
      */
-    Currency getBaseCurrency();
+    CurrencyUnit getBaseCurrency();
 
     /**
      * Get the market full depth from the MtGox exchange
@@ -108,7 +109,7 @@ public interface MtGoxHTTPClient {
      * @return
      * @throws Exception
      */
-    CurrencyInfo getCurrencyInfo(Currency currency) throws Exception;
+    CurrencyInfo getCurrencyInfo(CurrencyUnit currency) throws Exception;
 
     /**
      * Get MtGox special information about a currency.

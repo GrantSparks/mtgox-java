@@ -4,3 +4,8 @@ nbactions.xml
 log.out
 mtgox.properties
 dependency-reduced-pom.xml
+/.classpath
+/.project
+/.settings
+/mtgox.properties.old
+/mtgox.properties.bad
