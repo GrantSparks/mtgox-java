@@ -18,6 +18,7 @@ public class CurrencyInfo extends DtoBase {
     private String currency_code;
     private String name;
     private String symbol;
+    private int index;
     private int decimals;
     private int display_decimals;
     private String symbol_position;
@@ -42,6 +43,26 @@ public class CurrencyInfo extends DtoBase {
         }
     }
 
+//    public CurrencyInfo(@JsonProperty("currency") String currency_code,
+//            @JsonProperty("name") String name,
+//            @JsonProperty("symbol") String symbol,
+//            @JsonProperty("decimals") int decimals,
+//            @JsonProperty("display_decimals") int display_decimals,
+//            @JsonProperty("symbol_position") String symbol_position,
+//            @JsonProperty("virtual") String virtual,
+//            @JsonProperty("ticker_channel") String ticker_channel,
+//            @JsonProperty("depth_channel") String depth_channel) {
+//        this.currency_code = currency_code;
+//        this.name = name;
+//        this.symbol = symbol;
+//        this.decimals = decimals;
+//        this.display_decimals = display_decimals;
+//        this.symbol_position = symbol_position;
+//        this.virtual = virtual.trim().equalsIgnoreCase("Y");
+//        this.ticker_channel = ticker_channel;
+//        this.depth_channel = depth_channel;
+//    }
+
     public CurrencyInfo(@JsonProperty("currency") String currency_code,
             @JsonProperty("name") String name,
             @JsonProperty("symbol") String symbol,
@@ -50,7 +71,8 @@ public class CurrencyInfo extends DtoBase {
             @JsonProperty("symbol_position") String symbol_position,
             @JsonProperty("virtual") String virtual,
             @JsonProperty("ticker_channel") String ticker_channel,
-            @JsonProperty("depth_channel") String depth_channel) {
+            @JsonProperty("depth_channel") String depth_channel,
+            @JsonProperty("index") int index) {
         this.currency_code = currency_code;
         this.name = name;
         this.symbol = symbol;
@@ -60,6 +82,7 @@ public class CurrencyInfo extends DtoBase {
         this.virtual = virtual.trim().equalsIgnoreCase("Y");
         this.ticker_channel = ticker_channel;
         this.depth_channel = depth_channel;
+        this.index = index;
     }
 
     public Currency getCurrency() {
@@ -99,6 +122,14 @@ public class CurrencyInfo extends DtoBase {
 
     public String getDepth_channel() {
         return depth_channel;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override

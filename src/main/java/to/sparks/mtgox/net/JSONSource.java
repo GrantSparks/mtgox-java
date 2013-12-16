@@ -47,6 +47,11 @@ public class JSONSource<T extends DtoBase> {
         return getResult(jp, clazz);
     }
 
+    public T getResultFromStream(String in, Class clazz) throws IOException {
+        JsonParser jp = factory.createJsonParser(in);
+        return getResult(jp, clazz);
+    }
+
     public T getResultFromFile(String filename, Class clazz) throws IOException {
         return getResultFromStream(new FileInputStream(filename), clazz);
     }
