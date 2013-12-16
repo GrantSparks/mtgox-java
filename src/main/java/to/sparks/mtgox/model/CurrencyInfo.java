@@ -43,26 +43,6 @@ public class CurrencyInfo extends DtoBase {
         }
     }
 
-//    public CurrencyInfo(@JsonProperty("currency") String currency_code,
-//            @JsonProperty("name") String name,
-//            @JsonProperty("symbol") String symbol,
-//            @JsonProperty("decimals") int decimals,
-//            @JsonProperty("display_decimals") int display_decimals,
-//            @JsonProperty("symbol_position") String symbol_position,
-//            @JsonProperty("virtual") String virtual,
-//            @JsonProperty("ticker_channel") String ticker_channel,
-//            @JsonProperty("depth_channel") String depth_channel) {
-//        this.currency_code = currency_code;
-//        this.name = name;
-//        this.symbol = symbol;
-//        this.decimals = decimals;
-//        this.display_decimals = display_decimals;
-//        this.symbol_position = symbol_position;
-//        this.virtual = virtual.trim().equalsIgnoreCase("Y");
-//        this.ticker_channel = ticker_channel;
-//        this.depth_channel = depth_channel;
-//    }
-
     public CurrencyInfo(@JsonProperty("currency") String currency_code,
             @JsonProperty("name") String name,
             @JsonProperty("symbol") String symbol,
