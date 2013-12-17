@@ -22,6 +22,7 @@ public class AccountInfo extends DtoBase {
     private String id;
     private HashMap<String, Wallet> wallets;
     private double trade_Fee;
+    private String link;
 
     public AccountInfo(@JsonProperty("Login") String login,
             @JsonProperty("Rights") String[] rights,
@@ -32,7 +33,8 @@ public class AccountInfo extends DtoBase {
             @JsonProperty("Language") String language,
             @JsonProperty("Id") String id,
             @JsonProperty("Wallets") HashMap<String, Wallet> wallets,
-            @JsonProperty("Trade_Fee") double trade_Fee) {
+            @JsonProperty("Trade_Fee") double trade_Fee,
+            @JsonProperty("Link") String link) {
         this.login = login;
         this.rights = rights;
         this.last_Login = last_Login;
@@ -43,6 +45,11 @@ public class AccountInfo extends DtoBase {
         this.id = id;
         this.wallets = wallets;
         this.trade_Fee = trade_Fee;
+        this.link = link;
+    }
+
+    public String getLink() {
+        return link;
     }
 
     public String getLogin() {

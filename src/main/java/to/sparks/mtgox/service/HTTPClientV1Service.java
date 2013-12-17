@@ -20,7 +20,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Currency;
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.io.IOUtils;
 import to.sparks.mtgox.model.*;
 import to.sparks.mtgox.net.HTTPAuthenticator;
 import to.sparks.mtgox.net.JSONSource;
@@ -85,8 +88,10 @@ class HTTPClientV1Service extends HTTPAuthenticator {
     }
 
     public AccountInfo getPrivateInfo() throws IOException, NoSuchAlgorithmException, InvalidKeyException, Exception {
+        String json = IOUtils.toString(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand("", UrlFactory.Command.PrivateInfo)));
+        logger.log(Level.FINE, "PrivateInfo response: {0}", json);
 
-        Result<AccountInfo> privateInfo = privateInfoJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand("", UrlFactory.Command.PrivateInfo)), AccountInfo.class);
+        Result<AccountInfo> privateInfo = privateInfoJSON.getResultFromStream(json, AccountInfo.class);
         return privateInfo.getReturn();
     }
 
@@ -102,7 +107,10 @@ class HTTPClientV1Service extends HTTPAuthenticator {
     public CurrencyInfo getCurrencyInfo(String currencyCode) throws IOException, Exception {
         HashMap<String, String> params = new HashMap<>();
         params.put("currency", currencyCode);
-        Result<CurrencyInfo> currencyInfo = currencyInfoJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(currencyCode, UrlFactory.Command.CurrencyInfo), params), CurrencyInfo.class);
+
+        String json = IOUtils.toString(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(currencyCode, UrlFactory.Command.CurrencyInfo), params));
+        logger.log(Level.FINE, "CurrencyInfo response: {0}", json);
+        Result<CurrencyInfo> currencyInfo = currencyInfoJSON.getResultFromStream(json, CurrencyInfo.class);
         if (currencyInfo.getError() != null) {
             throw new RuntimeException(currencyInfo.getToken() + ": " + currencyInfo.getError());
         }
@@ -118,7 +126,9 @@ class HTTPClientV1Service extends HTTPAuthenticator {
     }
 
     public Lag getLag() throws IOException, Exception {
-        Result<Lag> response = lagJSON.getResultFromStream(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(UrlFactory.Command.Lag)), Lag.class);
+        String json = IOUtils.toString(getMtGoxHTTPInputStream(UrlFactory.getUrlForCommand(UrlFactory.Command.Lag)));
+        logger.log(Level.FINE, "Lag response: {0}", json);
+        Result<Lag> response = lagJSON.getResultFromStream(json, Lag.class);
         if (response.getError() != null) {
             throw new RuntimeException(response.getToken() + ": " + response.getError());
         }

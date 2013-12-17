@@ -51,6 +51,7 @@ public class HTTPAuthenticator {
     public HTTPAuthenticator(final Logger logger, String apiKey, String secret) {
         this.apiKey = apiKey;
         this.secret = secret;
+        this.logger = logger;
 
         TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
